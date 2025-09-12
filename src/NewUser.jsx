@@ -2,13 +2,35 @@ import { useState } from "react";
 
 const NewUser = () => {
 	const [username, setUsername] = useState("");
-	const [firstname, setFirstname] = useState("");
-	const [surname, setSurname] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
-	const handleSubmit = () => {
-		const user = { firstname, surname, email, username, password };
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		const user = { email, username, password };
+
+		try {
+			const res = await fetch("https://localhost:44305/api/user/register", 
+			{
+				method: "POST",
+				headers: {"Content-Type": "application/json"},
+				body: JSON.stringify(user)
+			});
+
+			if(!res.ok){
+				const errorText = await res.text();
+				throw new Error(errorText || `Error ${res.status}`);
+			}
+
+			const data = await res.json();
+			console.log("User created: ", data);
+			alert ("User registered successfully!");
+
+		}
+		catch(err) {
+			console.error("Registration failed: ", err);
+			alert("Failed: " + err.message);
+		}
 	};
 
 	return (
@@ -16,20 +38,6 @@ const NewUser = () => {
 			<h2>Wellcome to Allergen Checkher App.</h2>
 			<h2>Please fill out this form to register.</h2>
 			<form onSubmit={handleSubmit}>
-				<label>Enter your firstname</label>
-				<input
-					type="text"
-					required
-					value={firstname}
-					onChange={(e) => setFirstname(e.target.value)}
-				/>
-				<label>Enter your surname</label>
-				<input
-					type="text"
-					required
-					value={surname}
-					onChange={(e) => setSurname(e.target.value)}
-				/>
 				<label>Enter your email</label>
 				<input
 					type="text"
@@ -37,13 +45,15 @@ const NewUser = () => {
 					value={email}
 					onChange={(e) => setEmail(e.target.value)}
 				/>
-				<label>Enter your user</label>
+				<br></br>
+				<label>Enter your username</label>
 				<input
 					type="text"
 					required
 					value={username}
 					onChange={(e) => setUsername(e.target.value)}
 				/>
+				<br></br>
 				<label>Enter your password</label>
 				<input
 					type="text"
@@ -51,6 +61,8 @@ const NewUser = () => {
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
 				/>
+				<br></br>
+				<button type="submit">Register</button>
 			</form>
 		</div>
 	);
