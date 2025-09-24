@@ -17,6 +17,10 @@
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
+.italic-text{
+  font-style: italic;
+  font-size: small;
+}
 
 @keyframes logo-spin {
   from {
