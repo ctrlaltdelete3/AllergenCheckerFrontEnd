@@ -1,9 +1,12 @@
 import { useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 
+// TODO: clear login form after successfull register OR send to "home" page
 const NewUser = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [password2, setPassword2] = useState("");
+	const navigation = useNavigate();
 
 	const rules = useMemo(() => {
 		const hasMinLen = password.length >= 8;
@@ -45,6 +48,7 @@ const NewUser = () => {
 			const data = await res.json();
 			console.log("User created: ", data);
 			alert ("User registered successfully!");
+			navigation("/");
 
 		}
 		catch(err) {
@@ -94,18 +98,17 @@ const NewUser = () => {
 				<br></br>
 
 				 <div id="pw-rules" style={{ marginTop: 8, fontSize: 14 }}>
-				<br></br>
-          		<strong>Password must contain:</strong>
-				<br></br>
+					<br></br>
+					<strong>Password must contain:</strong>
+					<br></br>
 
-				<ul style={{ paddingLeft: 0, marginTop: 6 }}>
-					<Rule ok={rules.hasMinLen}  text="at least 8 characters" />
-					<Rule ok={rules.hasNumber}  text="at least one number (0–9)" />
-					<Rule ok={rules.hasSpecialChar} text="at least one special character (!@#$…)" />
-					<Rule ok={rules.match}      text="passwords match" />
-				</ul>
-        </div>
-
+					<ul style={{ paddingLeft: 0, marginTop: 6 }}>
+						<Rule ok={rules.hasMinLen}  text="at least 8 characters" />
+						<Rule ok={rules.hasNumber}  text="at least one number (0–9)" />
+						<Rule ok={rules.hasSpecialChar} text="at least one special character (!@#$…)" />
+						<Rule ok={rules.match}      text="passwords match" />
+					</ul>
+        		</div>
 				<button type="submit" disabled={!formValid}>Register</button>
 			</form>
 		</div>
