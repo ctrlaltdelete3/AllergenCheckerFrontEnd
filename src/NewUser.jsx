@@ -47,6 +47,7 @@ const NewUser = () => {
 
 			const data = await res.json();
 			console.log("User created: ", data);
+			localStorage.setItem("currentUser", JSON.stringify({email: email}));
 			alert ("User registered successfully!");
 			navigation("/");
 

@@ -33,6 +33,7 @@ const handleSubmit = async (e) => {
 
 		const data = await res.json();
 		console.log("Login success!", data);
+		localStorage.setItem("currentUser", JSON.stringify({email: email}));
 		alert("Welcome " + email + " !");
 		navigate("/");
 	}
