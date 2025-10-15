@@ -19,7 +19,7 @@ const Home = () => {
             You can now manage your allergens or check some products to see if
             they are safe for you to use!
           </p>
-          <div>
+          <div className="btn-group">
             <Link to="/myallergens" className="btn">
               My Allergens
             </Link>
@@ -36,13 +36,15 @@ const Home = () => {
       ) : (
         <>
           <h3>Please login or register to start using the app.</h3>
-          <Link to="/login" className="btn">
-            Login
-          </Link>
-          <br></br>
-          <Link to="/newuser" className="btn">
-            Register
-          </Link>
+          <div className="btn-group">
+            <Link to="/login" className="btn">
+              Login
+            </Link>
+            <br></br>
+            <Link to="/newuser" className="btn">
+              Register
+            </Link>
+          </div>
         </>
       )}
     </div>
